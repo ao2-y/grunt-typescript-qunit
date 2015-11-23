@@ -89,7 +89,7 @@
    grunt.registerTask('tsqunithtml', 'Create Qunit HTML for TypeScript Task', function () {
      var defaultQunitCssPath = './node_modules/grunt-typescript-qunit/node_modules/qunitjs/qunit/qunit.css';
      var defaultQunitJsPath = './node_modules/grunt-typescript-qunit/node_modules/qunitjs/qunit/qunit.js';
-     var defaultSinonJsPath = './node_modules/grunt-typescript-qunit/node_modules/sinon/pkg/sinon-1.15.4.js';
+     var defaultSinonJsPath = './node_modules/grunt-typescript-qunit/node_modules/sinon/pkg/sinon-1.17.2.js';
 
      var testFileRegex = new RegExp('.*\\-test.ts$');
 

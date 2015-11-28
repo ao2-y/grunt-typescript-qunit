@@ -48,7 +48,8 @@
              module : 'amd',
              target: 'es5',
              sourceMap: true,
-             sourceRoot: './'
+             sourceRoot: './',
+             experimentalDecorators: true
            }
          }
        },
@@ -104,7 +105,7 @@
      if(!settings.sinonJsPath) settings.sinonJsPath = defaultSinonJsPath;
      if(settings.testFileSuffix) testFileRegex = new RegExp('.*\\' + settings.testFileSuffix + '$');
      if(settings.useSinon === undefined) settings.useSinon = true;
-
+     if(!settings.dependencies) settings.dependencies = [];
      var tsTestLoader = function(p) {
          if(!p.endsWith('/')){
              p = p + '/';
@@ -145,7 +146,7 @@
        return tsFiles;
      };
 
-     var createTestHtml = function(testTarget,srcTarget){
+     var createTestHtml = function(testTarget,srcTarget,dependenciesTarget){
 
        var template =
  '<!DOCTYPE html>\n\
@@ -156,6 +157,7 @@
    <link rel="stylesheet" href="${qunitcss}">\n\
  </head>\n\
  <body>\n\
+ ${dependencies}\n\
  <div id="qunit"></div><div id="qunit-fixture"></div>\n\
  ${codes}\n\
  <script src="${qunitjs}"></script>\n\
@@ -173,6 +175,11 @@
          codeScript += scriptTemplate.replace('${path}',srcTarget[i].replace('.ts','.js')) + '\n';
        }
 
+       var dependencies = '';
+       for (var i = 0; i < dependenciesTarget.length; i++) {
+         dependencies += scriptTemplate.replace('${path}',dependenciesTarget[i]) + '\n';
+       }
+
        var sinon = settings.useSinon === true ? sinonScriptTemplate.replace('${sinonjs}',path.resolve(settings.sinonJsPath)) : '';
 
        var html = template.replace('${codes}',codeScript)
@@ -180,6 +187,7 @@
                  .replace('${qunitcss}',path.resolve(settings.qunitCssPath))
                  .replace('${qunitjs}',path.resolve(settings.qunitJsPath))
                  .replace('${sinon}',sinon);
+                 .replace('${dependencies}',dependencies)
 
        return html;
      };
@@ -207,7 +215,7 @@
          return ts.indexOf('.d.ts') === -1;
        });
 
-       var body = createTestHtml(path.resolve(targetFiles[i]),srcList);
+       var body = createTestHtml(path.resolve(targetFiles[i]),srcList,dependencies);
 
        writeTestHtml(targetFiles[i],body);
      }

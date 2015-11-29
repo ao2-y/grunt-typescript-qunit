@@ -186,8 +186,8 @@
                  .replace('${tests}',testScript)
                  .replace('${qunitcss}',path.resolve(settings.qunitCssPath))
                  .replace('${qunitjs}',path.resolve(settings.qunitJsPath))
-                 .replace('${sinon}',sinon);
-                 .replace('${dependencies}',dependencies)
+                 .replace('${sinon}',sinon)
+                 .replace('${dependencies}',dependenciesPath);
 
        return html;
      };

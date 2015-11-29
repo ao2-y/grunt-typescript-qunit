@@ -84,7 +84,7 @@
      grunt.task.run('tsqunithtml');
      grunt.task.run('qunit_junit');
      grunt.task.run('qunit:tsqunit_target');
-     grunt.task.run('cover_ts');
+    //  grunt.task.run('cover_ts');
    });
 
    grunt.registerTask('tsqunithtml', 'Create Qunit HTML for TypeScript Task', function () {

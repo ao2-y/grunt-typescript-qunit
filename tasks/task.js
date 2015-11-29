@@ -175,9 +175,9 @@
          codeScript += scriptTemplate.replace('${path}',srcTarget[i].replace('.ts','.js')) + '\n';
        }
 
-       var dependencies = '';
+       var dependenciesPath = '';
        for (var i = 0; i < dependenciesTarget.length; i++) {
-         dependencies += scriptTemplate.replace('${path}',dependenciesTarget[i]) + '\n';
+         dependenciesPath += scriptTemplate.replace('${path}',path.resolve(dependenciesTarget[i])) + '\n';
        }
 
        var sinon = settings.useSinon === true ? sinonScriptTemplate.replace('${sinonjs}',path.resolve(settings.sinonJsPath)) : '';
@@ -215,7 +215,7 @@
          return ts.indexOf('.d.ts') === -1;
        });
 
-       var body = createTestHtml(path.resolve(targetFiles[i]),srcList,dependencies);
+       var body = createTestHtml(path.resolve(targetFiles[i]),srcList,settings.dependencies);
 
        writeTestHtml(targetFiles[i],body);
      }
